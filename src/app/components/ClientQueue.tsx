@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { Suspense, useRef } from "react";
 import QueueItem from "./QueueItem";
 import { sendDataToApi } from "@/actions";
 
@@ -30,10 +30,12 @@ const ClientQueue = ({ users }: { users: any }) => {
 				</div>
 			</form>
 			<div>
-				{users &&
-					users.map((user: any) => (
-						<QueueItem key={user.id} name={user.name} />
-					))}
+				<Suspense fallback={<div>Loading...</div>}>
+					{users &&
+						users.map((user: any) => (
+							<QueueItem key={user.id} name={user.name} />
+						))}
+				</Suspense>
 			</div>
 		</div>
 	);

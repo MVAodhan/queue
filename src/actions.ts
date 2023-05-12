@@ -1,5 +1,6 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export async function sendDataToApi(name: string) {
 	const prisma = new PrismaClient();
@@ -10,5 +11,6 @@ export async function sendDataToApi(name: string) {
 		},
 	});
 
-	console.log("added");
+	prisma.$disconnect();
+	revalidatePath("/");
 }
